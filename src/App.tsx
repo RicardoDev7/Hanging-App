@@ -2,10 +2,11 @@ import './App.css'
 import { letters } from './helpers/letters';
 import { HangImage } from './components/HangImage';
 import { useEffect, useState, type JSX } from 'react';
+import { getRandonWord } from './helpers/getRandonWord';
 
 function App() : JSX.Element {
 
-  const [word] = useState('LAPTOP');
+  const [word] = useState(getRandonWord());
   const [hiddenWord, setHiddenWord] = useState('_ '.repeat(word.length));
   const hiddenWordArray = hiddenWord.split(' ');
   const [ attempts, setAttempts ] = useState(0);
