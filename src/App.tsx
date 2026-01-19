@@ -1,16 +1,27 @@
 import './App.css'
 import { letters } from './helpers/letters';
 import { HangImage } from './components/HangImage';
-import type { JSX } from 'react';
+import { useState, type JSX } from 'react';
 
 function App() : JSX.Element {
+
+  const [ attempts, setAttempts ] = useState(0);
+
+  const checkLetter = (letter: string) => {
+    setAttempts(Math.min(attempts + 1, 9));
+  }
+
   return (
     <div className="App">
-      <HangImage imageNumber={9} />
+      <HangImage imageNumber={attempts} />
       <h3>_ _ _ _ _ _ _ _ _</h3>
-      <h3>Intentos: 0</h3>
+      <h3>Intentos: {attempts}</h3>
       {
-        letters.map(x => <button key={x}>{x}</button>)
+        letters.map(x => 
+          <button 
+            onClick={() => checkLetter(x)} 
+            key={x}>{x}
+          </button>)
       }
     </div>
   )

@@ -17,6 +17,7 @@ interface Props{
 }
 
 export function HangImage({imageNumber}: Props) : JSX.Element {
+    if(imageNumber >= 9) imageNumber = 9;
     return (
         <img 
         src={images[imageNumber]} 
