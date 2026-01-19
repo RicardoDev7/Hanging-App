@@ -6,12 +6,21 @@ import { useState, type JSX } from 'react';
 function App() : JSX.Element {
 
   const [word] = useState('LAPTOP');
-  const [hiddenWord] = useState('_ '.repeat(word.length));
-
+  const [hiddenWord, setHiddenWord] = useState('_ '.repeat(word.length));
+  const hiddenWordArray = hiddenWord.split(' ');
   const [ attempts, setAttempts ] = useState(0);
 
   const checkLetter = (letter: string) => {
-    setAttempts(Math.min(attempts + 1, 9));
+    if(!word.includes(letter)){
+      setAttempts(Math.min(attempts + 1, 9));
+      return;
+    }
+    for(let i = 0; i < word.length; i++){
+      if(word[i].toLowerCase() == letter.toLowerCase()){
+        hiddenWordArray[i] = word[i];
+      } 
+    }
+    setHiddenWord(hiddenWordArray.join(' '));
   }
 
   return (
