@@ -6,7 +6,7 @@ import { getRandonWord } from './helpers/getRandonWord';
 
 function App() : JSX.Element {
 
-  const [word] = useState(getRandonWord());
+  const [word, setWord] = useState(getRandonWord());
   const [hiddenWord, setHiddenWord] = useState('_ '.repeat(word.length));
   const hiddenWordArray = hiddenWord.split(' ');
   const [ attempts, setAttempts ] = useState(0);
@@ -36,6 +36,15 @@ function App() : JSX.Element {
     setHiddenWord(hiddenWordArray.join(' '));
   }
 
+  const newGame = () => {
+    const newWord = getRandonWord();
+    setWord(newWord);
+    setHiddenWord('_ '.repeat(newWord.length));
+    setAttempts(0);
+    setLose(false);
+    setWon(false);
+  }
+
   return (
     <div className="App">
       <HangImage imageNumber={attempts} />
@@ -58,6 +67,8 @@ function App() : JSX.Element {
             key={x}>{x}
           </button>)
       }
+      <br />
+      <button onClick={newGame}>¿New Game?</button>
     </div>
   )
 }
