@@ -1,7 +1,7 @@
 import './App.css'
 import { letters } from './helpers/letters';
 import { HangImage } from './components/HangImage';
-import { useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 
 function App() : JSX.Element {
 
@@ -9,8 +9,20 @@ function App() : JSX.Element {
   const [hiddenWord, setHiddenWord] = useState('_ '.repeat(word.length));
   const hiddenWordArray = hiddenWord.split(' ');
   const [ attempts, setAttempts ] = useState(0);
+  const [lose, setLose] = useState(false);
+  const [won, setWon] = useState(false);
+
+  useEffect(() => {
+    if(attempts == 9) setLose(true);
+  }, [attempts]);
+
+  useEffect(() => {
+    const currentHiddenWord = hiddenWord.split(' ').join('');
+    if(currentHiddenWord == word) setWon(true);
+  }, [hiddenWord]);
 
   const checkLetter = (letter: string) => {
+    if(lose || won) return;
     if(!word.includes(letter)){
       setAttempts(Math.min(attempts + 1, 9));
       return;
@@ -28,6 +40,16 @@ function App() : JSX.Element {
       <HangImage imageNumber={attempts} />
       <h3>{hiddenWord}</h3>
       <h3>Intentos: {attempts}</h3>
+      {
+        (lose) 
+        ? <h2>Usuario Perdió. La palabra era: {word.toUpperCase()}</h2> 
+        : ''
+      }
+      {
+        (won) 
+        ? <h2>Felicidades!! Ganaste</h2> 
+        : ''
+      }
       {
         letters.map(x => 
           <button 
