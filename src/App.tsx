@@ -5,6 +5,9 @@ import { useState, type JSX } from 'react';
 
 function App() : JSX.Element {
 
+  const [word] = useState('LAPTOP');
+  const [hiddenWord] = useState('_ '.repeat(word.length));
+
   const [ attempts, setAttempts ] = useState(0);
 
   const checkLetter = (letter: string) => {
@@ -14,7 +17,7 @@ function App() : JSX.Element {
   return (
     <div className="App">
       <HangImage imageNumber={attempts} />
-      <h3>_ _ _ _ _ _ _ _ _</h3>
+      <h3>{hiddenWord}</h3>
       <h3>Intentos: {attempts}</h3>
       {
         letters.map(x => 
